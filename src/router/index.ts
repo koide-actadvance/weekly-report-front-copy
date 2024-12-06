@@ -33,6 +33,11 @@ const routes = [
         name: 'SamplePage2',
         component: () => import('@/components/views/SamplePage2.vue'),
       },
+      {
+        path: 'login',
+        name: 'login',
+        component: () => import('@/components/views/Login.vue'),
+      },
     ],
   },
 ]

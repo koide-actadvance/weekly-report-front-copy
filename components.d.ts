@@ -12,14 +12,13 @@ declare module 'vue' {
     Footer: typeof import('./src/components/layouts/Footer.vue')['default']
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
     Home: typeof import('./src/components/views/Home.vue')['default']
+    Login: typeof import('./src/components/views/Login.vue')['default']
     MainFrame: typeof import('./src/components/layouts/MainFrame.vue')['default']
     MainView: typeof import('./src/components/layouts/MainView.vue')['default']
     NavigationDrawer: typeof import('./src/components/layouts/NavigationDrawer.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
-    SampleFrame: typeof import('./src/components/layouta/SampleFrame.vue')['default']
     SamplePage1: typeof import('./src/components/views/SamplePage1.vue')['default']
     SamplePage2: typeof import('./src/components/views/SamplePage2.vue')['default']
-    View: typeof import('./src/components/layout/View.vue')['default']
   }
 }
