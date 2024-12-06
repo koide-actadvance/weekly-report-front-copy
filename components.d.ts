@@ -17,9 +17,7 @@ declare module 'vue' {
     NavigationDrawer: typeof import('./src/components/layouts/NavigationDrawer.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
-    SampleFrame: typeof import('./src/components/layouta/SampleFrame.vue')['default']
     SamplePage1: typeof import('./src/components/views/SamplePage1.vue')['default']
     SamplePage2: typeof import('./src/components/views/SamplePage2.vue')['default']
-    View: typeof import('./src/components/layout/View.vue')['default']
   }
 }
