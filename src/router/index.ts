@@ -33,6 +33,11 @@ const routes = [
         name: 'SamplePage2',
         component: () => import('@/components/views/SamplePage2.vue'),
       },
+      {
+        path: 'reportinput',
+        name: 'ReportInput',
+        component: () => import('@/components/views/ReportInput.vue'),
+      },
     ],
   },
 ]
