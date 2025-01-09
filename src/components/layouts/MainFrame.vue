@@ -5,6 +5,8 @@
       color="primary"
       @click-bar-nav-icon="drawer = !drawer"
       @click-theme-icon="switchTheme"
+      @click-logout-icon="switchLogout"
+      :isLogout="isLogout"
       :isDarkTheme="isDarkTheme"
       :key="theme"
     />
@@ -28,7 +30,7 @@
 
   // params
   const title: string = '週報システム';
-  const ownerName: string = 'ACT-Advance.';
+  const ownerName: string = 'ACT.';
   const publishedYear: number = 2024;
 
   // refs
@@ -38,11 +40,15 @@
     Dark: 'dark',
   };
   const theme = ref(THEMES.Light);
+  const isLogout = ref(true);
   const isDarkTheme = ref(true);
 
   // functions
   const switchTheme = () => {
     theme.value = theme.value === THEMES.Light ? THEMES.Dark : THEMES.Light;
     isDarkTheme.value = isDarkTheme.value === true ? false : true;
+  };
+  const switchLogout = () => {
+    isLogout.value = isLogout.value === true ? false : true;
   };
 </script>
