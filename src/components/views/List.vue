@@ -8,6 +8,19 @@
       persistent-hint
       type="input"
     ></v-text-field>
+
+    <v-btn>
+      検索
+    </v-btn>
+
+    <v-btn>
+      新規
+    </v-btn>
+
+    <v-btn>
+      クリア
+    </v-btn>
+
     <!--  <v-date-picker v-model="range" range></v-date-picker> -->
     <!--  <p>選択された範囲: {{ range }}</p> -->
 
