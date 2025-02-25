@@ -3,10 +3,10 @@
     <v-form
       v-model="isValid"
     >
-    <v-row></v-row>       
+    <v-container></v-container>
     <v-row>
         <v-col cols="2">
-            <p class="text-h5">ログインID</p>
+            <p class="text-h5 mt-3">ログインID</p>
         </v-col>
     
         <v-col>
@@ -30,7 +30,7 @@
 
     <v-row>
         <v-col cols="2">
-            <p class="text-h5">パスワード</p>
+            <p class="text-h5 mt-3">パスワード</p>
         </v-col>
 
         <v-col>
@@ -39,11 +39,13 @@
                 max-height="80"
             >
                 <v-text-field
-                    type = "password"
+                    :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
+                    :type="visible ? 'text' : 'password'"
                     variant="outlined"
                     bg-color="blue-grey-lighten-4"
                     maxlength="20"
                     v-model="password"
+                    @click:append-inner="visible = !visible"
                     :rules="[
                         (v) => v.length > 0 || 'パスワードを入力してください',
                     ]" 
@@ -64,4 +66,5 @@
     const loginid = ref('');
     const password = ref('');
     const isValid = ref(false);
+    const visible = ref(false);
 </script>
