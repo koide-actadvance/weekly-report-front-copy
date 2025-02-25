@@ -18,7 +18,6 @@
             v-model="leadername"
             :counter="20"
             :rules="nameRules"
-            label="所属チームLD名"
             max-width="500px"
           ></v-text-field>
         </p>
@@ -27,7 +26,6 @@
           <v-text-field
             v-model="usercompany"
             :rules="companyRules"
-            label="ユーザー会社名"
             max-width="500px"
           ></v-text-field>
         </p>
@@ -36,7 +34,6 @@
           <v-text-field
             v-model="uppercompany"
             :rules="companyRules"
-            label="元請会社名"
             max-width="500px"
           ></v-text-field>
         </p>
@@ -45,20 +42,17 @@
           <v-text-field
             v-model="officeaddress"
             :rules="addressRules"
-            label="現場住所"
             max-width="500px"
           ></v-text-field>
         </p>
         <p class="text-body-1 my-2">
           現場定時：  
           <v-select
-            label="出社時刻"
             :items="['08:50', '08:55', '09:00', '09:05', '09:10', '09:15']"
             max-width="200px"
           ></v-select>
             ～  
           <v-select
-            label="退社時刻"
             :items="['17:50', '17:55', '18:00', '18:05', '18:10', '18:15']"
             max-width="200px"
           ></v-select>
@@ -69,32 +63,26 @@
             v-model="managername"
             :counter="20"
             :rules="nameRules"
-            label="自社担当営業"
             max-width="500px"
           ></v-text-field>
         </p>
         <p class="text-body-1 my-2">
           期間：  
+          <!--
           <v-container>
-            <!-- 日付入力用のテキストボックス -->
-            <!-- テキストフィールドをクリックするとダイアログが表示 -->
             <v-text-field
               v-model="selectedDate"
-              label="日付を選択"
               readonly
               @click="dialog = true"  
               max-width="500px"
             />
 
-            <!-- 日付ピッカーを表示するためのダイアログ -->
-            <!-- 日付を選択するとダイアログが閉じる -->
             <v-dialog v-model="dialog" persistent max-width="290px">
               <v-card>
                 <v-card-title>
                   <span class="headline">日付選択</span>
                 </v-card-title>
                 <v-card-text>
-                  <!-- v-date-picker -->
                   <v-date-picker
                     v-model="selectedDate"
                     @input="dialog = false">
@@ -106,6 +94,27 @@
               </v-card>
             </v-dialog>
           </v-container>
+        -->
+          <v-container>
+            <v-menu v-model="menu" :close-on-content-click="false">
+              <template v-slot:activator="{ props }">
+                <v-text-field
+                  v-model="formattedDate"
+                  label="Select Date"
+                  prepend-icon="mdi-calendar"
+                  v-bind="props"
+                ></v-text-field>
+              </template>
+              <v-locale-provider locale="ja">
+                <v-date-picker v-model="dateForPicker" color="primary" title="日付選択" header="日付">
+                  <template v-slot:actions>
+                    <v-btn @click="menu = false">cancel</v-btn>
+                    <v-btn @click="saveDate">OK</v-btn>
+                  </template>
+                </v-date-picker>
+              </v-locale-provider>
+            </v-menu>
+          </v-container>
         </p>
         <hr>
         <p class="text-body-1 my-2">
@@ -115,15 +124,20 @@
         <p class="text-body-1 my-2">
           <v-row>
             &emsp;情報源：  
-            <v-checkbox label="上位会社"></v-checkbox>
-            <v-checkbox label="協力会社"></v-checkbox>
-            <v-checkbox label="ACT社員"></v-checkbox>
-            <v-checkbox label="その他"></v-checkbox>
+            <v-checkbox id="sourceTopComp" label="上位会社">
+            </v-checkbox>
+            <v-checkbox id="sourcePartComp" label="協力会社">
+            </v-checkbox>
+            <v-checkbox id="sourceAct" label="ACT社員">
+            </v-checkbox>
+            <v-checkbox v-model="isChecked1" id="sourceOther" label="その他">
+            </v-checkbox>
           </v-row>
           <v-row>
             <v-col>
               <v-text-field
-                label="情報源その他"
+                v-model="sourceOtherText"
+                :rules="sourceOtherTextRules"
                 max-width="800px"
               ></v-text-field>
             </v-col>
@@ -132,16 +146,22 @@
         <p class="text-body-1 my-2">
           <v-row>
             &emsp;情報収集手段：  
-            <v-checkbox label="直接問い合わせ"></v-checkbox>
-            <v-checkbox label="先輩社員から"></v-checkbox>
-            <v-checkbox label="全体周知"></v-checkbox>
-            <v-checkbox label="小耳に挟んだ"></v-checkbox>
-            <v-checkbox label="その他"></v-checkbox>
+            <v-checkbox id="meansDirect" label="直接問い合わせ">
+            </v-checkbox>
+            <v-checkbox id="meansElder" label="先輩社員から">
+            </v-checkbox>
+            <v-checkbox id="meansAwareness" label="全体周知">
+            </v-checkbox>
+            <v-checkbox id="meansPick" label="小耳に挟んだ">
+            </v-checkbox>
+            <v-checkbox v-model="isChecked2" id="meansOther" label="その他">
+            </v-checkbox>
           </v-row>
           <v-row>
             <v-col>
               <v-text-field
-                label="情報収集手段その他"
+                v-model="meansOtherText"
+                :rules="meansOtherTextRules"
                 max-width="800px"
               ></v-text-field>
             </v-col>
@@ -153,7 +173,6 @@
               営業に関する情報：  
               <v-textarea 
                 v-model="eigyoinfo"
-                label="営業に関する情報"
                 max-width="800px"
               ></v-textarea>
             </v-col>
@@ -166,7 +185,6 @@
         <p class="text-body-1 my-2">
           平均残業時間：  
           <v-select
-            label="平均残業時間"
             :items="['0:15', '0:30', '0:45', '1:00', '1:15', '1:30', '1:45', '2:00']"
             max-width="200px"
           ></v-select>
@@ -177,7 +195,6 @@
             <v-text-field
               v-model="minworktime"
               :rules="timeRules"
-              label="最低稼働時間"
               max-width="300px"
             ></v-text-field>
             &emsp;&emsp;&emsp;
@@ -190,7 +207,7 @@
         <p class="text-body-1 my-2">
           進捗状況：  
           <v-select
-            label="進捗状況"
+            id="progress"
             :items="['A', 'B', 'C', 'D', 'E']"
             max-width="200px"
           ></v-select>
@@ -198,7 +215,7 @@
         <p class="text-body-1 my-2">
           体調：  
           <v-select
-            label="体調"
+            id="conditions"
             :items="['A', 'B', 'C', 'D', 'E']"
             max-width="200px"
           ></v-select>
@@ -206,7 +223,7 @@
         <p class="text-body-1 my-2">
           現場LDや上位会社メンバーとの人間関係：  
           <v-select
-            label="現場LDや上位会社メンバーとの人間関係"
+            id="relationships"
             :items="['A', 'B', 'C', 'D', 'E']"
             max-width="200px"
           ></v-select>
@@ -218,7 +235,6 @@
               <v-textarea 
                 v-model="pointing"
                 :rules="pointingRules"
-                label="失敗したこと、指摘を受けた点"
                 max-width="800px"
               ></v-textarea>
             </v-col>
@@ -231,7 +247,6 @@
               <v-textarea 
                 v-model="thoughts"
                 :rules="thoughtsRules"
-                label="所感"
                 max-width="800px"
               ></v-textarea>
             </v-col>
@@ -248,7 +263,6 @@
               v-model="employeename"
               :counter="20"
               :rules="nameRules"
-              label="社員名"
               max-width="500px"
             ></v-text-field>
           </p>
@@ -259,7 +273,6 @@
                 <v-textarea 
                   v-model="situation"
                   :rules="situationRules"
-                  label="状況"
                   max-width="800px"
                 ></v-textarea>
               </v-col>
@@ -300,6 +313,10 @@
   const officeaddress = ref('');
   const managername = ref('');
   const selectedDate = ref('');  // 選択した日付
+  const isChecked1 = ref(false);
+  const sourceOtherText = ref('');
+  const isChecked2 = ref(false);
+  const meansOtherText = ref('');
   const eigyoinfo = ref('');
   const minworktime = ref('');
   const pointing = ref('');
@@ -337,6 +354,15 @@
       return '時間を入力してください。';
     },
   ];
+
+  const sourceOtherTextRules = ref(
+    [(v: string) => (isChecked1.value && !v ? "「その他」をチェックした場合、入力必須です。" : true)]
+  );
+
+  const meansOtherTextRules = ref(
+    [(v: string) => (isChecked2.value && !v ? "「その他」をチェックした場合、入力必須です。" : true)]
+  );
+
   const pointingRules = [
     (value: string) => {
       if (value) return true;
@@ -355,4 +381,26 @@
       return '状況を入力してください。';
     },
   ];
+
+  const menu = ref(false);
+  const dateForPicker: string = ref(null);
+  const formattedDate = ref('');
+  
+
+    function saveDate(): void {
+      if (dateForPicker) {
+        formattedDate = formatDate(dateForPicker);
+        menu = false;
+      }
+    }
+    function formatDate(dateForPicker: string | null): string {
+      if (!dateForPicker) return '';
+      const date = new Date(dateForPicker);
+      if (isNaN(date.getTime())) return '';
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const day = String(date.getDate()).padStart(2, '0');
+      return `${year}/${month}/${day}`;
+    }
+  
 </script>
