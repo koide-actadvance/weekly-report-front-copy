@@ -12,7 +12,7 @@
       type="input"
     ></v-text-field>
 
-    <v-btn>
+    <v-btn color="primary">
       検索
     </v-btn>
 
@@ -32,7 +32,7 @@
       :items="pref"
       :items-per-page-options="pages"
       items-per-page-text="表示行数"
-      class="elevation-1"
+      class="elevation-1 dataTableStyle"
     ></v-data-table>
     </div>
 
@@ -78,3 +78,10 @@ export default {
   }
 }
 </script>
+<style>
+.dataTableStyle th {
+	background-color: #66FFFF !important;
+	font-weight: bold !important;
+	color: #000000 !important;
+}
+</style>
