@@ -12,6 +12,7 @@ declare module 'vue' {
     Footer: typeof import('./src/components/layouts/Footer.vue')['default']
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
     Home: typeof import('./src/components/views/Home.vue')['default']
+    List: typeof import('./src/components/views/List.vue')['default']
     MainFrame: typeof import('./src/components/layouts/MainFrame.vue')['default']
     MainView: typeof import('./src/components/layouts/MainView.vue')['default']
     NavigationDrawer: typeof import('./src/components/layouts/NavigationDrawer.vue')['default']
