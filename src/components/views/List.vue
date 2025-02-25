@@ -2,6 +2,12 @@
   <v-container>
     <p class="text-h5 my-2">週報一覧画面（週次報告書）</p>
 
+    <v-text-field
+      hint="Enter a keyword"
+      label="キーワードでフィルタ"
+      persistent-hint
+      type="input"
+    ></v-text-field>
     <!--  <v-date-picker v-model="range" range></v-date-picker> -->
     <!--  <p>選択された範囲: {{ range }}</p> -->
 
