@@ -68,52 +68,64 @@
         </p>
         <p class="text-body-1 my-2">
           期間：  
-          <!--
           <v-container>
-            <v-text-field
-              v-model="selectedDate"
-              readonly
-              @click="dialog = true"  
-              max-width="500px"
-            />
-
-            <v-dialog v-model="dialog" persistent max-width="290px">
-              <v-card>
-                <v-card-title>
-                  <span class="headline">日付選択</span>
-                </v-card-title>
-                <v-card-text>
-                  <v-date-picker
-                    v-model="selectedDate"
-                    @input="dialog = false">
-                  </v-date-picker>
-                </v-card-text>
-                <v-card-actions>
-                  <v-btn text="閉じる" @click="dialog = false"></v-btn>
-                </v-card-actions>
-              </v-card>
-            </v-dialog>
-          </v-container>
-        -->
-          <v-container>
-            <v-menu v-model="menu" :close-on-content-click="false">
-              <template v-slot:activator="{ props }">
+            <v-locale-provider locale="ja-JP">
                 <v-text-field
-                  v-model="formattedDate"
-                  label="Select Date"
-                  prepend-icon="mdi-calendar"
-                  v-bind="props"
+                  v-model="startDate"
+                  @click="handleClick1"
+                  outlined
+                  readonly
+                  max-width="200px"
                 ></v-text-field>
-              </template>
-              <v-locale-provider locale="ja">
-                <v-date-picker v-model="dateForPicker" color="primary" title="日付選択" header="日付">
-                  <template v-slot:actions>
-                    <v-btn @click="menu = false">cancel</v-btn>
-                    <v-btn @click="saveDate">OK</v-btn>
-                  </template>
-                </v-date-picker>
-              </v-locale-provider>
-            </v-menu>
+                <v-dialog
+                  v-if="menu1"
+                  v-model="menu1"
+                  :close-on-content-click="false"
+                  full-screen
+                >
+                <v-row justify="center">
+                <!-- <v-card class="d-flex justify-center align-center "> -->
+                  <v-date-picker
+                    v-model="selectedDate1"
+                    @click:cancel="handleCancel1"
+                    @update:model-value="handleConfirm1"
+                    title="日付選択"
+                    header="日付"
+                  ></v-date-picker>
+                <!-- </v-card> -->
+                </v-row>
+              </v-dialog>
+            </v-locale-provider>
+          </v-container>
+          ～
+          <v-container>
+            <v-locale-provider locale="ja-JP">
+                <v-text-field
+                  v-model="endDate"
+                  @click="handleClick2"
+                  outlined
+                  readonly
+                  max-width="200px"
+                ></v-text-field>
+                <v-dialog
+                  v-if="menu2"
+                  v-model="menu2"
+                  :close-on-content-click="false"
+                  full-screen
+                >
+                <v-row justify="center">
+                <!-- <v-card class="d-flex justify-center align-center "> -->
+                  <v-date-picker
+                    v-model="selectedDate2"
+                    @click:cancel="handleCancel2"
+                    @update:model-value="handleConfirm2"
+                    title="日付選択"
+                    header="日付"
+                  ></v-date-picker>
+                <!-- </v-card> -->
+                </v-row>
+              </v-dialog>
+            </v-locale-provider>
           </v-container>
         </p>
         <hr>
@@ -304,6 +316,7 @@
 
 <script setup lang="ts">
   import { ref } from 'vue';
+import { VDatePicker } from 'vuetify/lib/components/VDatePicker/index.mjs';
 
   const valid = ref(false);  // v-formのバリデーション状態を管理
   const editorName: string = "新宿　一郎";
@@ -312,7 +325,8 @@
   const uppercompany = ref('');
   const officeaddress = ref('');
   const managername = ref('');
-  const selectedDate = ref('');  // 選択した日付
+  const selectedDate1 = ref(new Date());  // 開始日
+  const selectedDate2 = ref(new Date());  // 終了日
   const isChecked1 = ref(false);
   const sourceOtherText = ref('');
   const isChecked2 = ref(false);
@@ -323,7 +337,40 @@
   const thoughts = ref('');
   const employeename = ref('');
   const situation = ref('');
-  const dialog = ref(false);  // ダイアログの表示・非表示
+
+  let menu1 = ref<boolean>(false);
+  let menu2 = ref<boolean>(false);
+  let startDate = ref<string>(``);
+  let endDate = ref<string>(``);
+
+  const handleClick1 = () => {
+    menu1.value = true;
+  };
+  const handleClick2 = () => {
+    menu2.value = true;
+  };
+  const handleCancel1 = () => {
+    menu1.value = false;
+  };
+  const handleCancel2 = () => {
+    menu2.value = false;
+  };
+  const handleConfirm1 = () => {
+    startDate.value = formatDate(selectedDate1.value);
+    menu1.value = false;
+  };
+  const handleConfirm2 = () => {
+    endDate.value = formatDate(selectedDate2.value);
+    menu2.value = false;
+  };
+  function formatDate(dateForPicker:Date):string {
+		if (!dateForPicker) return '';
+		const date = new Date(dateForPicker);
+		const year = date.getFullYear();
+		const month = String(date.getMonth() + 1).padStart(2, '0');
+		const day = String(date.getDate()).padStart(2, '0');
+		return `${year}/${month}/${day}`;
+	}
 
   // バリデーションルール
   const nameRules = [
@@ -381,26 +428,4 @@
       return '状況を入力してください。';
     },
   ];
-
-  const menu = ref(false);
-  const dateForPicker: string = ref(null);
-  const formattedDate = ref('');
-  
-
-    function saveDate(): void {
-      if (dateForPicker) {
-        formattedDate = formatDate(dateForPicker);
-        menu = false;
-      }
-    }
-    function formatDate(dateForPicker: string | null): string {
-      if (!dateForPicker) return '';
-      const date = new Date(dateForPicker);
-      if (isNaN(date.getTime())) return '';
-      const year = date.getFullYear();
-      const month = String(date.getMonth() + 1).padStart(2, '0');
-      const day = String(date.getDate()).padStart(2, '0');
-      return `${year}/${month}/${day}`;
-    }
-  
 </script>
