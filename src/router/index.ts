@@ -6,7 +6,36 @@
 
 // Composables
 import { createRouter, createWebHistory } from 'vue-router/auto'
-import { routes } from 'vue-router/auto-routes'
+// import { routes } from 'vue-router/auto-routes'
+
+const routes = [
+  {
+    path: '/',
+    component: () => import('@/components/layouts/MainFrame.vue'),
+    children: [
+      {
+        path: '',
+        name: 'Home',
+        component: () => import('@/components/views/Home.vue'),
+      },
+      {
+        path: 'about',
+        name: 'About',
+        component: () => import('@/components/views/About.vue'),
+      },
+      {
+        path: 'samplePage1',
+        name: 'SamplePage1',
+        component: () => import('@/components/views/SamplePage1.vue'),
+      },
+      {
+        path: 'samplePage2',
+        name: 'SamplePage2',
+        component: () => import('@/components/views/SamplePage2.vue'),
+      },
+    ],
+  },
+]
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
