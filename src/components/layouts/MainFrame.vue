@@ -5,6 +5,10 @@
       color="primary"
       @click-bar-nav-icon="drawer = !drawer"
       @click-theme-icon="switchTheme"
+      @click-logout-icon="switchLogout"
+      :isLogout="isLogout"
+      :isDarkTheme="isDarkTheme"
+      :key="theme"
     />
     <NavigationDrawer v-model="drawer" />
     <MainView />
@@ -25,9 +29,9 @@
   import Footer from '@/components/layouts/Footer.vue';
 
   // params
-  const title: string = 'Example title';
-  const ownerName: string = 'Example owner mame';
-  const publishedYear: number = 2023;
+  const title: string = '週報システム';
+  const ownerName: string = 'ACT.';
+  const publishedYear: number = 2024;
 
   // refs
   const drawer = ref(false);
@@ -36,9 +40,15 @@
     Dark: 'dark',
   };
   const theme = ref(THEMES.Light);
+  const isLogout = ref(true);
+  const isDarkTheme = ref(true);
 
   // functions
   const switchTheme = () => {
     theme.value = theme.value === THEMES.Light ? THEMES.Dark : THEMES.Light;
+    isDarkTheme.value = isDarkTheme.value === true ? false : true;
+  };
+  const switchLogout = () => {
+    isLogout.value = isLogout.value === true ? false : true;
   };
 </script>
