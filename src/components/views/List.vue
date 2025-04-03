@@ -14,13 +14,27 @@
       :items-per-page-options="pages"
       items-per-page-text="表示行数"
       class="elevation-1 dataTableStyle"
-    ></v-data-table>
+    >
+    <template v-slot:item.actions="{ item }">
+        <v-btn
+          size="small"
+          @click="deleteItem(item.raw)"
+        >
+          詳細
+        </v-btn>
+    </template>
+    </v-data-table>
     </div>
   </v-container>
 </template>
 
 <script>
 export default {
+  methods: {
+    deleteItem(item){
+      alert( item.no + "番のデータを削除します");
+    }
+  },
   data () {
     return {
       itemsPerPage: 20,
@@ -37,15 +51,15 @@ export default {
         { title: '元請', align: 'start', key: 'population' },
         { title: '自社担当営業', align: 'start', key: 'eigyo' },
         { title: '期間', align: 'start', key: 'kikan' },
-        { title: '', align: 'end', key: 'ss' }
+        { title: '', align: 'end', key: 'actions' }
       ],
       pref: [
-        {no: 1,pref_jp: "山田",pref_en: "Advance",area: "A社",population: "NDI", eigyo:"宮川Amg",kikan:"2015/7/20～2015/7/26",ss:"詳細"},
-        {no: 2,pref_jp: "鈴木",pref_en: "Act",area: "B社",population: "NEC", eigyo:"秋山Amg",kikan:"2015/7/20～2015/7/26",ss:"詳細"},
-        {no: 3,pref_jp: "山田",pref_en: "Advance",area: "A社",population: "NDI", eigyo:"宮川Amg",kikan:"2015/7/13～2015/7/19",ss:"詳細"},
-        {no: 4,pref_jp: "鈴木",pref_en: "Act",area: "B社",population: "NEC", eigyo:"秋山Amg",kikan:"2015/7/13～2015/7/19",ss:"詳細"},
-        {no: 5,pref_jp: "山田",pref_en: "Advance",area: "A社",population: "NDI", eigyo:"宮川Amg",kikan:"2015/7/6～2015/7/12",ss:"詳細"},
-        {no: 6,pref_jp: "鈴木",pref_en: "Act",area: "B社",population: "NEC", eigyo:"秋山Amg",kikan:"2015/7/6～2015/7/12",ss:"詳細"}
+        {no: 1,pref_jp: "山田",pref_en: "Advance",area: "A社",population: "NDI", eigyo:"宮川Amg",kikan:"2015/7/20～2015/7/26",actions:"詳細"},
+        {no: 2,pref_jp: "鈴木",pref_en: "Act",area: "B社",population: "NEC", eigyo:"秋山Amg",kikan:"2015/7/20～2015/7/26",actions:"詳細"},
+        {no: 3,pref_jp: "山田",pref_en: "Advance",area: "A社",population: "NDI", eigyo:"宮川Amg",kikan:"2015/7/13～2015/7/19",actions:"詳細"},
+        {no: 4,pref_jp: "鈴木",pref_en: "Act",area: "B社",population: "NEC", eigyo:"秋山Amg",kikan:"2015/7/13～2015/7/19",actions:"詳細"},
+        {no: 5,pref_jp: "山田",pref_en: "Advance",area: "A社",population: "NDI", eigyo:"宮川Amg",kikan:"2015/7/6～2015/7/12",actions:"詳細"},
+        {no: 6,pref_jp: "鈴木",pref_en: "Act",area: "B社",population: "NEC", eigyo:"秋山Amg",kikan:"2015/7/6～2015/7/12",actions:"詳細"}
       ],
     }
   }
