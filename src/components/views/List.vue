@@ -1,66 +1,6 @@
 <template>
   <v-container>
     <p class="text-h5 my-2">週報一覧画面（週次報告書）</p>
-
-<!--
-    <v-date-picker v-model="range" range></v-date-picker>
-    <p>選択された範囲: {{ range }}</p> 
--->
-    <span> 期間 </span>
-    <v-text-field
-      hint="Enter a year"
-      label="年"
-      persistent-hint
-      type="input"
-    ></v-text-field>
-    <v-text-field
-      hint="Enter a month"
-      label="月"
-      persistent-hint
-      type="input"
-    ></v-text-field>
-    <v-text-field
-      hint="Enter a day"
-      label="日"
-      persistent-hint
-      type="input"
-    ></v-text-field>
-    <span> ～ </span>
-    <v-text-field
-      hint="Enter a year"
-      label="年"
-      persistent-hint
-      type="input"
-    ></v-text-field>
-    <v-text-field
-      hint="Enter a month"
-      label="月"
-      persistent-hint
-      type="input"
-    ></v-text-field>
-    <v-text-field
-      hint="Enter a day"
-      label="日"
-      persistent-hint
-      type="input"
-    ></v-text-field>
-
-    <span> キーワード </span>
-    <v-text-field
-      hint="Enter a keyword"
-      label="キーワードでフィルタ"
-      persistent-hint
-      type="input"
-    ></v-text-field>
-
-    <v-btn color="primary">
-      検索
-    </v-btn>
-
-    <v-btn color="mycolor lighten-1">
-      クリア
-    </v-btn>
-
     <v-btn color="red darken-1">
       新規
     </v-btn>
@@ -76,7 +16,6 @@
       class="elevation-1 dataTableStyle"
     ></v-data-table>
     </div>
-
   </v-container>
 </template>
 
@@ -84,8 +23,7 @@
 export default {
   data () {
     return {
-
-      itemsPerPage: 5,
+      itemsPerPage: 20,
       pages: [
         {value: 5, title: '5'},
         {value: 10, title: '10'},
@@ -99,7 +37,7 @@ export default {
         { title: '元請', align: 'start', key: 'population' },
         { title: '自社担当営業', align: 'start', key: 'eigyo' },
         { title: '期間', align: 'start', key: 'kikan' },
-        { title: '', align: 'start', key: 'ss' },
+        { title: '', align: 'end', key: 'ss' }
       ],
       pref: [
         {no: 1,pref_jp: "山田",pref_en: "Advance",area: "A社",population: "NDI", eigyo:"宮川Amg",kikan:"2015/7/20～2015/7/26",ss:"詳細"},
@@ -109,7 +47,6 @@ export default {
         {no: 5,pref_jp: "山田",pref_en: "Advance",area: "A社",population: "NDI", eigyo:"宮川Amg",kikan:"2015/7/6～2015/7/12",ss:"詳細"},
         {no: 6,pref_jp: "鈴木",pref_en: "Act",area: "B社",population: "NEC", eigyo:"秋山Amg",kikan:"2015/7/6～2015/7/12",ss:"詳細"}
       ],
-      range: null, // 配列で範囲を管理 ['2024-12-01', '2024-12-10']
     }
   }
 }
