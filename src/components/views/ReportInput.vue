@@ -7,7 +7,7 @@
       <p class="text-body-1 my-2">
         週次報告書の情報を入力してください。
       </p>
-      <!-- テキストボックスのLabelは消すか入力したときに消えるようにする -->
+
       <v-responsive>
         <p class="text-body-1 my-2">
           記入者名：  {{editorName}}
@@ -48,11 +48,13 @@
         <p class="text-body-1 my-2">
           現場定時：  
           <v-select
+            v-model="startTime"
             :items="['08:50', '08:55', '09:00', '09:05', '09:10', '09:15']"
             max-width="200px"
           ></v-select>
             ～  
           <v-select
+          v-model="endTime"
             :items="['17:50', '17:55', '18:00', '18:05', '18:10', '18:15']"
             max-width="200px"
           ></v-select>
@@ -136,13 +138,13 @@
         <p class="text-body-1 my-2">
           <v-row>
             &emsp;情報源：  
-            <v-checkbox id="sourceTopComp" label="上位会社">
+            <v-checkbox v-model="isChecked1" id="isChecked1" value="sourceTopComp" label="上位会社">
             </v-checkbox>
-            <v-checkbox id="sourcePartComp" label="協力会社">
+            <v-checkbox v-model="isChecked1" id="isChecked1" value="sourcePartComp" label="協力会社">
             </v-checkbox>
-            <v-checkbox id="sourceAct" label="ACT社員">
+            <v-checkbox v-model="isChecked1" id="isChecked1" value="sourceAct" label="ACT社員">
             </v-checkbox>
-            <v-checkbox v-model="isChecked1" id="sourceOther" label="その他">
+            <v-checkbox v-model="isChecked1" id="isChecked1" value="sourceOther" label="その他">
             </v-checkbox>
           </v-row>
           <v-row>
@@ -158,15 +160,15 @@
         <p class="text-body-1 my-2">
           <v-row>
             &emsp;情報収集手段：  
-            <v-checkbox id="meansDirect" label="直接問い合わせ">
+            <v-checkbox v-model="isChecked2" id="isChecked2" value="meansDirect" label="直接問い合わせ">
             </v-checkbox>
-            <v-checkbox id="meansElder" label="先輩社員から">
+            <v-checkbox v-model="isChecked2" id="isChecked2" value="meansElder" label="先輩社員から">
             </v-checkbox>
-            <v-checkbox id="meansAwareness" label="全体周知">
+            <v-checkbox v-model="isChecked2" id="isChecked2" value="meansAwareness" label="全体周知">
             </v-checkbox>
-            <v-checkbox id="meansPick" label="小耳に挟んだ">
+            <v-checkbox v-model="isChecked2" id="isChecked2" value="meansPick" label="小耳に挟んだ">
             </v-checkbox>
-            <v-checkbox v-model="isChecked2" id="meansOther" label="その他">
+            <v-checkbox v-model="isChecked2" id="isChecked2" value="meansOther" label="その他">
             </v-checkbox>
           </v-row>
           <v-row>
@@ -197,6 +199,7 @@
         <p class="text-body-1 my-2">
           平均残業時間：  
           <v-select
+            v-model="overTime"
             :items="['0:15', '0:30', '0:45', '1:00', '1:15', '1:30', '1:45', '2:00']"
             max-width="200px"
           ></v-select>
@@ -210,7 +213,7 @@
               max-width="300px"
             ></v-text-field>
             &emsp;&emsp;&emsp;
-            <v-radio-group inline>
+            <v-radio-group inline v-model="timePassed">
               <v-radio label="達成できる" value="1"></v-radio>
               <v-radio label="達成できない" value="2"></v-radio>
             </v-radio-group>
@@ -219,7 +222,7 @@
         <p class="text-body-1 my-2">
           進捗状況：  
           <v-select
-            id="progress"
+            v-model="progress"
             :items="['A', 'B', 'C', 'D', 'E']"
             max-width="200px"
           ></v-select>
@@ -227,7 +230,7 @@
         <p class="text-body-1 my-2">
           体調：  
           <v-select
-            id="conditions"
+            v-model="conditions"
             :items="['A', 'B', 'C', 'D', 'E']"
             max-width="200px"
           ></v-select>
@@ -235,7 +238,7 @@
         <p class="text-body-1 my-2">
           現場LDや上位会社メンバーとの人間関係：  
           <v-select
-            id="relationships"
+            v-model="relationships"
             :items="['A', 'B', 'C', 'D', 'E']"
             max-width="200px"
           ></v-select>
@@ -304,7 +307,7 @@
             <v-btn>
               キャンセル
             </v-btn>
-            <v-btn>
+            <v-btn @click="sendData">
               送信
             </v-btn>
           </v-row>
@@ -316,7 +319,11 @@
 
 <script setup lang="ts">
   import { ref } from 'vue';
-import { VDatePicker } from 'vuetify/lib/components/VDatePicker/index.mjs';
+  import { VDatePicker } from 'vuetify/lib/components/VDatePicker/index.mjs';
+  import axios from 'axios';
+
+  // セッションからユーザー名を取得
+  // const user = JSON.parse(localStorage.getItem('user'));
 
   const valid = ref(false);  // v-formのバリデーション状態を管理
   const editorName: string = "新宿　一郎";
@@ -324,15 +331,22 @@ import { VDatePicker } from 'vuetify/lib/components/VDatePicker/index.mjs';
   const usercompany = ref('');
   const uppercompany = ref('');
   const officeaddress = ref('');
+  const startTime = ref('');
+  const endTime = ref('');
   const managername = ref('');
   const selectedDate1 = ref(new Date());  // 開始日
   const selectedDate2 = ref(new Date());  // 終了日
-  const isChecked1 = ref(false);
+  const isChecked1 = ref([]);
   const sourceOtherText = ref('');
-  const isChecked2 = ref(false);
+  const isChecked2 = ref([]);
   const meansOtherText = ref('');
   const eigyoinfo = ref('');
+  const overTime = ref('');
   const minworktime = ref('');
+  const timePassed = ref('');
+  const progress = ref('');
+  const conditions = ref('');
+  const relationships = ref('');
   const pointing = ref('');
   const thoughts = ref('');
   const employeename = ref('');
@@ -428,4 +442,45 @@ import { VDatePicker } from 'vuetify/lib/components/VDatePicker/index.mjs';
       return '状況を入力してください。';
     },
   ];
+
+  async function sendData() {
+    // 連携する値を格納
+    const jsonData = {
+      editorName: editorName,
+      leadername: leadername,
+      usercompany: usercompany,
+      uppercompany: uppercompany,
+      officeaddress: officeaddress,
+      startTime: startTime,
+      endTime: endTime,
+      managername: managername,
+      selectedDate1: selectedDate1,
+      selectedDate2: selectedDate2,
+      isChecked1: isChecked1,
+      sourceOtherText: sourceOtherText,
+      isChecked2: isChecked2,
+      meansOtherText: meansOtherText,
+      overTime: overTime,
+      minworktime: minworktime,
+      timePassed: timePassed,
+      progress: progress,
+      conditions: conditions,
+      relationships: relationships,
+      pointing: pointing,
+      thoughts: thoughts,
+      employeename: employeename,
+      situation: situation,
+    };
+
+    try {
+      const response = await axios.post('http://localhost:8081/api/dummies', jsonData, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      console.log('サーバーからのレスポンス:', response.data);
+    } catch (error) {
+      console.error('データ送信エラー:', error);
+    }
+  }
 </script>
