@@ -1,6 +1,60 @@
 <template>
   <v-container>
     <p class="text-h5 my-2">週報一覧画面（週次報告書）</p>
+    <span> 期間 </span>
+    <v-text-field
+      hint="Enter a year"
+      label="年"
+      persistent-hint
+      type="input"
+    ></v-text-field>
+    <v-text-field
+      hint="Enter a month"
+      label="月"
+      persistent-hint
+      type="input"
+    ></v-text-field>
+    <v-text-field
+      hint="Enter a day"
+      label="日"
+      persistent-hint
+      type="input"
+    ></v-text-field>
+    <span> ～ </span>
+    <v-text-field
+      hint="Enter a year"
+      label="年"
+      persistent-hint
+      type="input"
+    ></v-text-field>
+    <v-text-field
+      hint="Enter a month"
+      label="月"
+      persistent-hint
+      type="input"
+    ></v-text-field>
+    <v-text-field
+      hint="Enter a day"
+      label="日"
+      persistent-hint
+      type="input"
+    ></v-text-field>
+
+    <span> キーワード </span>
+    <v-text-field
+      hint="Enter a keyword"
+      label="キーワードでフィルタ"
+      persistent-hint
+      type="input"
+    ></v-text-field>
+
+    <v-btn color="primary">
+      検索
+    </v-btn>
+
+    <v-btn color="mycolor lighten-1">
+      クリア
+    </v-btn>
 
     <v-btn color="red darken-1">
       新規
@@ -26,7 +80,7 @@ export default {
   data () {
     return {
 
-      itemsPerPage: 5,
+      itemsPerPage: 20,
       pages: [
         {value: 5, title: '5'},
         {value: 10, title: '10'},
