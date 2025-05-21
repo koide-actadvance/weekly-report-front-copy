@@ -11,7 +11,11 @@
       :items-per-page-options="pages"
       items-per-page-text="表示行数"
       class="elevation-1"
-    ></v-data-table>
+    >
+    <template>
+        <v-btn @click="clickEdit(item)">編集</v-btn>
+    </template>
+    </v-data-table>
     </div>
 
   </v-container>
