@@ -30,6 +30,12 @@
       value: 'samplePage2',
       to: '/samplePage2',
     },
+    {
+      prependIcon: 'mdi-information',
+      title: 'Reportinput',
+      value: 'reportInput',
+      to: '/reportInput',
+    },
   ];
 </script>
 

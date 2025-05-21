@@ -301,7 +301,9 @@
             </v-btn>
           </v-row>
         </p>
+        <br />
         <hr>
+        <br />
         <p class="text-body-1 my-2">
           <v-row justify="end">
             <v-btn>
@@ -447,33 +449,35 @@
     // 連携する値を格納
     const jsonData = {
       editorName: editorName,
-      leadername: leadername,
-      usercompany: usercompany,
-      uppercompany: uppercompany,
-      officeaddress: officeaddress,
-      startTime: startTime,
-      endTime: endTime,
-      managername: managername,
-      selectedDate1: selectedDate1,
-      selectedDate2: selectedDate2,
-      isChecked1: isChecked1,
-      sourceOtherText: sourceOtherText,
-      isChecked2: isChecked2,
-      meansOtherText: meansOtherText,
-      overTime: overTime,
-      minworktime: minworktime,
-      timePassed: timePassed,
-      progress: progress,
-      conditions: conditions,
-      relationships: relationships,
-      pointing: pointing,
-      thoughts: thoughts,
-      employeename: employeename,
-      situation: situation,
+      leadername: leadername.value,
+      usercompany: usercompany.value,
+      uppercompany: uppercompany.value,
+      officeaddress: officeaddress.value,
+      startTime: startTime.value,
+      endTime: endTime.value,
+      managername: managername.value,
+      startDate: startDate.value,
+      endDate: endDate.value,
+      selectedDate1: selectedDate1.value,
+      selectedDate2: selectedDate2.value,
+      isChecked1: isChecked1.value,
+      sourceOtherText: sourceOtherText.value,
+      isChecked2: isChecked2.value,
+      meansOtherText: meansOtherText.value,
+      overTime: overTime.value,
+      minworktime: minworktime.value,
+      timePassed: timePassed.value,
+      progress: progress.value,
+      conditions: conditions.value,
+      relationships: relationships.value,
+      pointing: pointing.value,
+      thoughts: thoughts.value,
+      employeename: employeename.value,
+      situation: situation.value,
     };
 
     try {
-      const response = await axios.post('http://localhost:8081/api/dummies', jsonData, {
+      const response = await axios.post('http://localhost:8081/api/dummies/test', jsonData, {
         headers: {
           'Content-Type': 'application/json',
         },
