@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <p class="text-h5 my-2">週報一覧画面（週次報告書）</p>
-    <v-btn @click="reportinput()" color="red darken-1">
+    <v-btn @click="reportinput1()" color="red darken-1">
       新規
     </v-btn>
 
@@ -32,7 +32,7 @@
 export default {
   methods: {
     reportinput(item){
-      this.$router.push('/reportinput');
+      this.$router.push('/reportinput2');
     }
   },
   data () {
