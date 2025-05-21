@@ -15,7 +15,7 @@
       items-per-page-text="表示行数"
       class="elevation-1 dataTableStyle"
     >
-    <template v-slot:item.actions="{ item }">
+    <template v-slot:[`item.actions`]="{ item }">
         <v-btn
           size="small"
           @click="reportinput(item.raw)"
