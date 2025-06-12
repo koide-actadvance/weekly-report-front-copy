@@ -1,10 +1,16 @@
 <template>
   <v-form v-model="valid">
     <v-container>
-      <p class="text-h5 my-2">
+      <p v-if="isDisableInput" class="text-h5 my-2">
+        週次報告書詳細
+      </p>
+      <p v-else class="text-h5 my-2">
         週次報告書入力
       </p>
-      <p class="text-body-1 my-2">
+      <p v-if="isDisableInput" class="text-body-1 my-2">
+        週次報告書の情報を表示します。
+      </p>
+      <p v-else class="text-body-1 my-2">
         週次報告書の情報を入力してください。
       </p>
 
@@ -19,6 +25,7 @@
             :counter="20"
             :rules="nameRules"
             max-width="500px"
+            :disabled="isDisableInput"
           ></v-text-field>
         </p>
         <p class="text-body-1 my-2">
@@ -27,6 +34,7 @@
             v-model="usercompany"
             :rules="companyRules"
             max-width="500px"
+            :disabled="isDisableInput"
           ></v-text-field>
         </p>
         <p class="text-body-1 my-2">
@@ -35,6 +43,7 @@
             v-model="uppercompany"
             :rules="companyRules"
             max-width="500px"
+            :disabled="isDisableInput"
           ></v-text-field>
         </p>
         <p class="text-body-1 my-2">
@@ -43,6 +52,7 @@
             v-model="officeaddress"
             :rules="addressRules"
             max-width="500px"
+            :disabled="isDisableInput"
           ></v-text-field>
         </p>
         <p class="text-body-1 my-2">
@@ -51,12 +61,14 @@
             v-model="startTime"
             :items="['08:50', '08:55', '09:00', '09:05', '09:10', '09:15']"
             max-width="200px"
+            :disabled="isDisableInput"
           ></v-select>
             ～  
           <v-select
           v-model="endTime"
             :items="['17:50', '17:55', '18:00', '18:05', '18:10', '18:15']"
             max-width="200px"
+            :disabled="isDisableInput"
           ></v-select>
         </p>
         <p class="text-body-1 my-2">
@@ -66,6 +78,7 @@
             :counter="20"
             :rules="nameRules"
             max-width="500px"
+            :disabled="isDisableInput"
           ></v-text-field>
         </p>
         <p class="text-body-1 my-2">
@@ -78,6 +91,7 @@
                   outlined
                   readonly
                   max-width="200px"
+                  :disabled="isDisableInput"
                 ></v-text-field>
                 <v-dialog
                   v-if="menu1"
@@ -108,6 +122,7 @@
                   outlined
                   readonly
                   max-width="200px"
+                  :disabled="isDisableInput"
                 ></v-text-field>
                 <v-dialog
                   v-if="menu2"
@@ -138,13 +153,13 @@
         <p class="text-body-1 my-2">
           <v-row>
             &emsp;情報源：  
-            <v-checkbox v-model="isChecked1" id="isChecked1" value="sourceTopComp" label="上位会社">
+            <v-checkbox v-model="isChecked1" id="isChecked1" value="sourceTopComp" label="上位会社" :disabled="isDisableInput">
             </v-checkbox>
-            <v-checkbox v-model="isChecked1" id="isChecked1" value="sourcePartComp" label="協力会社">
+            <v-checkbox v-model="isChecked1" id="isChecked1" value="sourcePartComp" label="協力会社" :disabled="isDisableInput">
             </v-checkbox>
-            <v-checkbox v-model="isChecked1" id="isChecked1" value="sourceAct" label="ACT社員">
+            <v-checkbox v-model="isChecked1" id="isChecked1" value="sourceAct" label="ACT社員" :disabled="isDisableInput">
             </v-checkbox>
-            <v-checkbox v-model="isChecked1" id="isChecked1" value="sourceOther" label="その他">
+            <v-checkbox v-model="isChecked1" id="isChecked1" value="sourceOther" label="その他" :disabled="isDisableInput">
             </v-checkbox>
           </v-row>
           <v-row>
@@ -153,6 +168,7 @@
                 v-model="sourceOtherText"
                 :rules="sourceOtherTextRules"
                 max-width="800px"
+                :disabled="isDisableInput"
               ></v-text-field>
             </v-col>
           </v-row>
@@ -160,15 +176,15 @@
         <p class="text-body-1 my-2">
           <v-row>
             &emsp;情報収集手段：  
-            <v-checkbox v-model="isChecked2" id="isChecked2" value="meansDirect" label="直接問い合わせ">
+            <v-checkbox v-model="isChecked2" id="isChecked2" value="meansDirect" label="直接問い合わせ" :disabled="isDisableInput">
             </v-checkbox>
-            <v-checkbox v-model="isChecked2" id="isChecked2" value="meansElder" label="先輩社員から">
+            <v-checkbox v-model="isChecked2" id="isChecked2" value="meansElder" label="先輩社員から" :disabled="isDisableInput">
             </v-checkbox>
-            <v-checkbox v-model="isChecked2" id="isChecked2" value="meansAwareness" label="全体周知">
+            <v-checkbox v-model="isChecked2" id="isChecked2" value="meansAwareness" label="全体周知" :disabled="isDisableInput">
             </v-checkbox>
-            <v-checkbox v-model="isChecked2" id="isChecked2" value="meansPick" label="小耳に挟んだ">
+            <v-checkbox v-model="isChecked2" id="isChecked2" value="meansPick" label="小耳に挟んだ" :disabled="isDisableInput">
             </v-checkbox>
-            <v-checkbox v-model="isChecked2" id="isChecked2" value="meansOther" label="その他">
+            <v-checkbox v-model="isChecked2" id="isChecked2" value="meansOther" label="その他" :disabled="isDisableInput">
             </v-checkbox>
           </v-row>
           <v-row>
@@ -177,6 +193,7 @@
                 v-model="meansOtherText"
                 :rules="meansOtherTextRules"
                 max-width="800px"
+                :disabled="isDisableInput"
               ></v-text-field>
             </v-col>
           </v-row>
@@ -188,6 +205,7 @@
               <v-textarea 
                 v-model="eigyoinfo"
                 max-width="800px"
+                :disabled="isDisableInput"
               ></v-textarea>
             </v-col>
           </v-row>
@@ -202,6 +220,7 @@
             v-model="overTime"
             :items="['0:15', '0:30', '0:45', '1:00', '1:15', '1:30', '1:45', '2:00']"
             max-width="200px"
+            :disabled="isDisableInput"
           ></v-select>
         </p>
         <p class="text-body-1 my-2">
@@ -211,9 +230,10 @@
               v-model="minworktime"
               :rules="timeRules"
               max-width="300px"
+              :disabled="isDisableInput"
             ></v-text-field>
             &emsp;&emsp;&emsp;
-            <v-radio-group inline v-model="timePassed">
+            <v-radio-group inline v-model="timePassed" :disabled="isDisableInput">
               <v-radio label="達成できる" value="1"></v-radio>
               <v-radio label="達成できない" value="2"></v-radio>
             </v-radio-group>
@@ -225,6 +245,7 @@
             v-model="progress"
             :items="['A', 'B', 'C', 'D', 'E']"
             max-width="200px"
+            :disabled="isDisableInput"
           ></v-select>
         </p>
         <p class="text-body-1 my-2">
@@ -233,6 +254,7 @@
             v-model="conditions"
             :items="['A', 'B', 'C', 'D', 'E']"
             max-width="200px"
+            :disabled="isDisableInput"
           ></v-select>
         </p>
         <p class="text-body-1 my-2">
@@ -241,6 +263,7 @@
             v-model="relationships"
             :items="['A', 'B', 'C', 'D', 'E']"
             max-width="200px"
+            :disabled="isDisableInput"
           ></v-select>
         </p>
         <p class="text-body-1 my-2">
@@ -251,6 +274,7 @@
                 v-model="pointing"
                 :rules="pointingRules"
                 max-width="800px"
+                :disabled="isDisableInput"
               ></v-textarea>
             </v-col>
           </v-row>
@@ -263,6 +287,7 @@
                 v-model="thoughts"
                 :rules="thoughtsRules"
                 max-width="800px"
+                :disabled="isDisableInput"
               ></v-textarea>
             </v-col>
           </v-row>
@@ -271,6 +296,9 @@
         <p class="text-body-1 my-2">
           ●現場で稼働しているACT社員の状況
         </p>
+        <!-- <ul>
+          <li v-for="(item, index) in data" :key="index">{{ item.name }}</li>
+        </ul> -->
         <div>
           <p class="text-body-1 my-2">
           社員名：  
@@ -279,6 +307,7 @@
               :counter="20"
               :rules="nameRules"
               max-width="500px"
+              :disabled="isDisableInput"
             ></v-text-field>
           </p>
           <p class="text-body-1 my-2">
@@ -289,12 +318,15 @@
                   v-model="situation"
                   :rules="situationRules"
                   max-width="800px"
+                  :disabled="isDisableInput"
                 ></v-textarea>
               </v-col>
             </v-row>
           </p>
         </div>
-        <p class="text-body-1 my-2">
+        <p v-if="isDisableInput" class="text-body-1 my-2">
+        </p>
+        <p v-else class="text-body-1 my-2">
           <v-row justify="end">
             <v-btn>
               社員を追加
@@ -305,8 +337,13 @@
         <hr>
         <br />
         <p class="text-body-1 my-2">
-          <v-row justify="end">
+          <v-row v-if="isDisableInput" justify="end">
             <v-btn @click="returnPage">
+              戻る
+            </v-btn>
+          </v-row>
+          <v-row v-else justify="end" >
+            <v-btn>
               キャンセル
             </v-btn>
             <v-btn @click="sendData">
@@ -320,7 +357,8 @@
 </template>
 
 <script setup lang="ts">
-  import { ref } from 'vue';
+import axios from 'axios';
+import { ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { VDatePicker } from 'vuetify/lib/components/VDatePicker/index.mjs';
 
@@ -340,9 +378,9 @@ import { VDatePicker } from 'vuetify/lib/components/VDatePicker/index.mjs';
   const managername = ref('');
   const selectedDate1 = ref(new Date());  // 開始日
   const selectedDate2 = ref(new Date());  // 終了日
-  const isChecked1 = ref([]);
+  const isChecked1 = ref(["sourceTopComp"]);
   const sourceOtherText = ref('');
-  const isChecked2 = ref([]);
+  const isChecked2 = ref(["meansDirect"]);
   const meansOtherText = ref('');
   const eigyoinfo = ref('');
   const overTime = ref('');
@@ -360,6 +398,7 @@ import { VDatePicker } from 'vuetify/lib/components/VDatePicker/index.mjs';
   let menu2 = ref<boolean>(false);
   let startDate = ref<string>(``);
   let endDate = ref<string>(``);
+  let isDisableInput = ref<boolean>(true);
 
   const handleClick1 = () => {
     menu1.value = true;
@@ -446,10 +485,55 @@ import { VDatePicker } from 'vuetify/lib/components/VDatePicker/index.mjs';
       return '状況を入力してください。';
     },
   ];
-
+  function disableInput() {
+    isDisableInput.value = true;
+  }
+  function enableInput() {
+    isDisableInput.value = false;
+  }
   function returnPage() {
     router.push('/List')
   }
+
+  async function getData() {
+
+    try {
+      leadername.value = "テスト太郎";
+      usercompany.value = "テスト会社";
+      uppercompany.value = "テスト上位会社";
+      officeaddress.value = "東京都新宿区テスト町1-1-1";
+      startTime.value = "09:00";
+      endTime.value = "18:00";
+      managername.value = "テスト営業";
+      startDate.value = "2023/10/01"; // 例: 開始日
+      endDate.value = "2023/10/07"; // 例: 終了日
+      selectedDate1.value = new Date();
+      selectedDate2.value = new Date();
+      isChecked1.value.push("sourceOther");// 上位会社 その他
+      sourceOtherText.value = "全く無関係の方から得た情報です。";
+      isChecked2.value.push("meansOther"); // 直接問い合わせ その他
+      meansOtherText.value = "リーク情報です。";
+      overTime.value = "10";
+      eigyoinfo.value = "営業に関する情報をここに入力します。特に問題はありません。";
+      minworktime.value = "140";
+      timePassed.value = "1";
+      progress.value = "A";
+      conditions.value = "A";
+      relationships.value = "A";
+      pointing.value = "指摘は特にありませんでした。";
+      thoughts.value = "忙しい現場なため、残業が多くなりそうです。";
+      employeename.value = "山田太郎";
+      situation.value = "主に単体テストを行っています。";
+
+      console.log('サーバーからのレスポンス:');
+    } catch (error) {
+      console.error('データ送信エラー:', error);
+    }
+  }
+
+(() => {
+  getData();
+})();
 
   async function sendData() {
     // 連携する値を格納
@@ -483,13 +567,12 @@ import { VDatePicker } from 'vuetify/lib/components/VDatePicker/index.mjs';
     };
 
     try {
-      router.push('/List')
-      // const response = await axios.post('http://localhost:8081/api/dummies/test', jsonData, {
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //   },
-      // });
-      // console.log('サーバーからのレスポンス:', response.data);
+      const response = await axios.post('http://localhost:8081/api/dummies/test', jsonData, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      console.log('サーバーからのレスポンス:', response.data);
     } catch (error) {
       console.error('データ送信エラー:', error);
     }
