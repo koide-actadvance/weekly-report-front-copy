@@ -17,6 +17,7 @@ declare module 'vue' {
     MainFrame: typeof import('./src/components/layouts/MainFrame.vue')['default']
     MainView: typeof import('./src/components/layouts/MainView.vue')['default']
     NavigationDrawer: typeof import('./src/components/layouts/NavigationDrawer.vue')['default']
+    ReportDetail: typeof import('./src/components/views/ReportDetail.vue')['default']
     ReportInput: typeof import('./src/components/views/ReportInput.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
