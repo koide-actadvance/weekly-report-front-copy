@@ -218,6 +218,19 @@
           ></v-select>
         </p>
         <p class="text-body-1 my-2">
+          <v-row>
+            <v-col>
+              作業内容：  
+              <v-textarea 
+                v-model="works"
+                :rules="worksRules"
+                max-width="800px"
+                :disabled="isDisableInput"
+              ></v-textarea>
+            </v-col>
+          </v-row>
+        </p>
+        <p class="text-body-1 my-2">
           最低稼働時間：  
           <v-row>
             <v-text-field
@@ -365,6 +378,7 @@
   const meansOtherText = ref('');
   const eigyoinfo = ref('');
   const overTime = ref('');
+  const works = ref('');
   const minworktime = ref('');
   const timePassed = ref('');
   const progress = ref('');
@@ -454,6 +468,12 @@
       return '失敗したこと、指摘を受けた点を入力してください。無い場合は「特になし」と入力してください。';
     },
   ];
+  const worksRules = [
+    (value: string) => {
+      if (value) return true;
+      return '作業内容を入力してください。';
+    },
+  ];
   const thoughtsRules = [
     (value: string) => {
       if (value) return true;
@@ -487,6 +507,7 @@
       isChecked2: isChecked2.value,
       meansOtherText: meansOtherText.value,
       overTime: overTime.value,
+      works: works.value,
       minworktime: minworktime.value,
       timePassed: timePassed.value,
       progress: progress.value,
