@@ -54,7 +54,7 @@
         </v-col>
     </v-row>
     <v-row>
-        <v-btn>
+        <v-btn @click="$router.push('/list')">
             ログイン
         </v-btn>
     </v-row>
