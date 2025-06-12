@@ -16,22 +16,7 @@ const routes = [
       {
         path: '',
         name: 'Home',
-        component: () => import('@/components/views/Home.vue'),
-      },
-      {
-        path: 'about',
-        name: 'About',
-        component: () => import('@/components/views/About.vue'),
-      },
-      {
-        path: 'samplePage1',
-        name: 'SamplePage1',
-        component: () => import('@/components/views/SamplePage1.vue'),
-      },
-      {
-        path: 'samplePage2',
-        name: 'SamplePage2',
-        component: () => import('@/components/views/SamplePage2.vue'),
+        component: () => import('@/components/views/Login.vue'),
       },
       {
         path: 'List',

@@ -7,10 +7,8 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
-    About: typeof import('./src/components/views/About.vue')['default']
     AppBar: typeof import('./src/components/layouts/AppBar.vue')['default']
     Footer: typeof import('./src/components/layouts/Footer.vue')['default']
-    HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
     Home: typeof import('./src/components/views/Home.vue')['default']
     List: typeof import('./src/components/views/List.vue')['default']
     Login: typeof import('./src/components/views/Login.vue')['default']
@@ -21,8 +19,5 @@ declare module 'vue' {
     ReportInput: typeof import('./src/components/views/ReportInput.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
-    SamplePage1: typeof import('./src/components/views/SamplePage1.vue')['default']
-    SamplePage2: typeof import('./src/components/views/SamplePage2.vue')['default']
-    SamplePage3: typeof import('./src/components/views/SamplePage3.vue')['default']
   }
 }
