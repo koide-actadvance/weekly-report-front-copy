@@ -306,7 +306,7 @@
         <br />
         <p class="text-body-1 my-2">
           <v-row justify="end">
-            <v-btn>
+            <v-btn @click="returnPage">
               キャンセル
             </v-btn>
             <v-btn @click="sendData">
@@ -321,12 +321,14 @@
 
 <script setup lang="ts">
   import { ref } from 'vue';
-  import { VDatePicker } from 'vuetify/lib/components/VDatePicker/index.mjs';
-  import axios from 'axios';
+import { useRoute, useRouter } from 'vue-router';
+import { VDatePicker } from 'vuetify/lib/components/VDatePicker/index.mjs';
 
   // セッションからユーザー名を取得
   // const user = JSON.parse(localStorage.getItem('user'));
 
+  const router = useRouter();
+  const route = useRoute();
   const valid = ref(false);  // v-formのバリデーション状態を管理
   const editorName: string = "新宿　一郎";
   const leadername = ref('');
@@ -445,6 +447,10 @@
     },
   ];
 
+  function returnPage() {
+    router.push('/List')
+  }
+
   async function sendData() {
     // 連携する値を格納
     const jsonData = {
@@ -477,12 +483,13 @@
     };
 
     try {
-      const response = await axios.post('http://localhost:8081/api/dummies/test', jsonData, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-      console.log('サーバーからのレスポンス:', response.data);
+      router.push('/List')
+      // const response = await axios.post('http://localhost:8081/api/dummies/test', jsonData, {
+      //   headers: {
+      //     'Content-Type': 'application/json',
+      //   },
+      // });
+      // console.log('サーバーからのレスポンス:', response.data);
     } catch (error) {
       console.error('データ送信エラー:', error);
     }
