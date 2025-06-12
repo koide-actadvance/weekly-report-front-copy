@@ -19,21 +19,6 @@ const routes = [
         component: () => import('@/components/views/Login.vue'),
       },
       {
-        path: 'about',
-        name: 'About',
-        component: () => import('@/components/views/About.vue'),
-      },
-      {
-        path: 'samplePage1',
-        name: 'SamplePage1',
-        component: () => import('@/components/views/SamplePage1.vue'),
-      },
-      {
-        path: 'samplePage2',
-        name: 'SamplePage2',
-        component: () => import('@/components/views/SamplePage2.vue'),
-      },
-      {
         path: 'List',
         name: 'List',
         component: () => import('@/components/views/List.vue'),
@@ -42,11 +27,6 @@ const routes = [
         path: 'reportinput',
         name: 'ReportInput',
         component: () => import('@/components/views/ReportInput.vue'),
-      },
-      {
-        path: 'samplePage3',
-        name: 'SamplePage3',
-        component: () => import('@/components/views/SamplePage3.vue'),
       },
       {
         path: 'login',
