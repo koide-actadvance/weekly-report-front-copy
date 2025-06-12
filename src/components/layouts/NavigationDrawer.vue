@@ -8,33 +8,21 @@
   }[] = [
     {
       prependIcon: 'mdi-home',
-      title: 'Home',
+      title: 'Login',
       value: 'home',
       to: '/',
     },
     {
       prependIcon: 'mdi-information',
-      title: 'About',
-      value: 'about',
-      to: '/about',
-    },
-    {
-      prependIcon: 'mdi-information',
-      title: 'SamplePage1',
-      value: 'samplePage1',
-      to: '/samplePage1',
-    },
-    {
-      prependIcon: 'mdi-information',
-      title: 'SamplePage2',
-      value: 'samplePage2',
-      to: '/samplePage2',
+      title: 'List',
+      value: 'list',
+      to: '/list',
     },
     {
       prependIcon: 'mdi-information',
       title: 'Reportinput',
-      value: 'reportInput',
-      to: '/reportInput',
+      value: 'reportinput',
+      to: '/reportinput',
     },
   ];
 </script>
