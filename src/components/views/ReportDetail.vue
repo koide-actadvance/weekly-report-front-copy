@@ -233,7 +233,7 @@
               :disabled="isDisableInput"
             ></v-text-field>
             &emsp;&emsp;&emsp;
-            <v-radio-group inline v-model="timePassed">
+            <v-radio-group inline v-model="timePassed" :disabled="isDisableInput">
               <v-radio label="達成できる" value="1"></v-radio>
               <v-radio label="達成できない" value="2"></v-radio>
             </v-radio-group>
@@ -338,24 +338,16 @@
         <br />
         <p class="text-body-1 my-2">
           <v-row v-if="isDisableInput" justify="end">
+            <v-btn @click="returnPage">
+              戻る
+            </v-btn>
+          </v-row>
+          <v-row v-else justify="end" >
             <v-btn>
               キャンセル
             </v-btn>
             <v-btn @click="sendData">
               送信
-            </v-btn>
-          </v-row>
-          <v-row v-else justify="end" >
-            <v-btn @click="sendData">
-              戻る
-            </v-btn>
-          </v-row>
-          <v-row justify="end" >
-            <v-btn @click="disableInput">
-              dis
-            </v-btn>
-            <v-btn @click="enableInput">
-              en
             </v-btn>
           </v-row>
         </p>
@@ -365,13 +357,16 @@
 </template>
 
 <script setup lang="ts">
-  import { ref } from 'vue';
-  import { VDatePicker } from 'vuetify/lib/components/VDatePicker/index.mjs';
-  import axios from 'axios';
+import axios from 'axios';
+import { ref } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+import { VDatePicker } from 'vuetify/lib/components/VDatePicker/index.mjs';
 
   // セッションからユーザー名を取得
   // const user = JSON.parse(localStorage.getItem('user'));
 
+  const router = useRouter();
+  const route = useRoute();
   const valid = ref(false);  // v-formのバリデーション状態を管理
   const editorName: string = "新宿　一郎";
   const leadername = ref('');
@@ -383,9 +378,9 @@
   const managername = ref('');
   const selectedDate1 = ref(new Date());  // 開始日
   const selectedDate2 = ref(new Date());  // 終了日
-  const isChecked1 = ref([]);
+  const isChecked1 = ref(["sourceTopComp"]);
   const sourceOtherText = ref('');
-  const isChecked2 = ref([]);
+  const isChecked2 = ref(["meansDirect"]);
   const meansOtherText = ref('');
   const eigyoinfo = ref('');
   const overTime = ref('');
@@ -403,7 +398,7 @@
   let menu2 = ref<boolean>(false);
   let startDate = ref<string>(``);
   let endDate = ref<string>(``);
-  let isDisableInput = ref<boolean>(false);
+  let isDisableInput = ref<boolean>(true);
 
   const handleClick1 = () => {
     menu1.value = true;
@@ -496,6 +491,49 @@
   function enableInput() {
     isDisableInput.value = false;
   }
+  function returnPage() {
+    router.push('/List')
+  }
+
+  async function getData() {
+
+    try {
+      leadername.value = "テスト太郎";
+      usercompany.value = "テスト会社";
+      uppercompany.value = "テスト上位会社";
+      officeaddress.value = "東京都新宿区テスト町1-1-1";
+      startTime.value = "09:00";
+      endTime.value = "18:00";
+      managername.value = "テスト営業";
+      startDate.value = "2023/10/01"; // 例: 開始日
+      endDate.value = "2023/10/07"; // 例: 終了日
+      selectedDate1.value = new Date();
+      selectedDate2.value = new Date();
+      isChecked1.value.push("sourceOther");// 上位会社 その他
+      sourceOtherText.value = "全く無関係の方から得た情報です。";
+      isChecked2.value.push("meansOther"); // 直接問い合わせ その他
+      meansOtherText.value = "リーク情報です。";
+      overTime.value = "10";
+      eigyoinfo.value = "営業に関する情報をここに入力します。特に問題はありません。";
+      minworktime.value = "140";
+      timePassed.value = "1";
+      progress.value = "A";
+      conditions.value = "A";
+      relationships.value = "A";
+      pointing.value = "指摘は特にありませんでした。";
+      thoughts.value = "忙しい現場なため、残業が多くなりそうです。";
+      employeename.value = "山田太郎";
+      situation.value = "主に単体テストを行っています。";
+
+      console.log('サーバーからのレスポンス:');
+    } catch (error) {
+      console.error('データ送信エラー:', error);
+    }
+  }
+
+(() => {
+  getData();
+})();
 
   async function sendData() {
     // 連携する値を格納
