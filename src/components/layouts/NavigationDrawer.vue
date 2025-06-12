@@ -24,6 +24,12 @@
       value: 'reportinput',
       to: '/reportinput',
     },
+    {
+      prependIcon: 'mdi-information',
+      title: 'Reportdetail',
+      value: 'reportdetail',
+      to: '/reportdetail',
+    },
   ];
 </script>
 
