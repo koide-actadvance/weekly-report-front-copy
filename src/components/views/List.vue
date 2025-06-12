@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <p class="text-h5 my-2">週報一覧画面（週次報告書）</p>
-    <v-btn @click="reportinput()" color="red darken-1">
+    <v-btn @click="$router.push('/reportinput')" color="red darken-1">
       新規
     </v-btn>
 
@@ -18,7 +18,7 @@
     <template v-slot:[`item.actions`]="{ item }">
         <v-btn
           size="small"
-          @click="reportinput(item.raw)"
+          @click="reportdetail(item.raw)"
         >
           詳細
         </v-btn>
@@ -31,8 +31,8 @@
 <script>
 export default {
   methods: {
-    reportinput(item){
-      this.$router.push('/reportinput');
+    reportdetail(item){
+      this.$router.push('/reportdetail');
     }
   },
   data () {
