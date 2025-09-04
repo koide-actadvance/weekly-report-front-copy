@@ -31,7 +31,7 @@
   // params
   const title: string = '週報システム';
   const ownerName: string = 'ACT.';
-  const publishedYear: number = 2024;
+  const publishedYear: number = 2025;
 
   // refs
   const drawer = ref(false);
