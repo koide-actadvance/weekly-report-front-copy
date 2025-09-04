@@ -1,4 +1,4 @@
-<template>
+  <template>
   <v-form v-model="valid">
     <v-container>
       <p class="text-h5 my-2">
@@ -19,6 +19,7 @@
             :counter="20"
             :rules="nameRules"
             max-width="500px"
+            :disabled="isDisableInput"
           ></v-text-field>
         </p>
         <p class="text-body-1 my-2">
@@ -27,6 +28,7 @@
             v-model="usercompany"
             :rules="companyRules"
             max-width="500px"
+            :disabled="isDisableInput"
           ></v-text-field>
         </p>
         <p class="text-body-1 my-2">
@@ -35,6 +37,7 @@
             v-model="uppercompany"
             :rules="companyRules"
             max-width="500px"
+            :disabled="isDisableInput"
           ></v-text-field>
         </p>
         <p class="text-body-1 my-2">
@@ -43,6 +46,7 @@
             v-model="officeaddress"
             :rules="addressRules"
             max-width="500px"
+            :disabled="isDisableInput"
           ></v-text-field>
         </p>
         <p class="text-body-1 my-2">
@@ -51,12 +55,14 @@
             v-model="startTime"
             :items="['08:50', '08:55', '09:00', '09:05', '09:10', '09:15']"
             max-width="200px"
+            :disabled="isDisableInput"
           ></v-select>
             ～  
           <v-select
           v-model="endTime"
             :items="['17:50', '17:55', '18:00', '18:05', '18:10', '18:15']"
             max-width="200px"
+            :disabled="isDisableInput"
           ></v-select>
         </p>
         <p class="text-body-1 my-2">
@@ -66,6 +72,7 @@
             :counter="20"
             :rules="nameRules"
             max-width="500px"
+            :disabled="isDisableInput"
           ></v-text-field>
         </p>
         <p class="text-body-1 my-2">
@@ -78,6 +85,7 @@
                   outlined
                   readonly
                   max-width="200px"
+                  :disabled="isDisableInput"
                 ></v-text-field>
                 <v-dialog
                   v-if="menu1"
@@ -108,6 +116,7 @@
                   outlined
                   readonly
                   max-width="200px"
+                  :disabled="isDisableInput"
                 ></v-text-field>
                 <v-dialog
                   v-if="menu2"
@@ -153,6 +162,7 @@
                 v-model="sourceOtherText"
                 :rules="sourceOtherTextRules"
                 max-width="800px"
+                :disabled="isDisableInput"
               ></v-text-field>
             </v-col>
           </v-row>
@@ -177,6 +187,7 @@
                 v-model="meansOtherText"
                 :rules="meansOtherTextRules"
                 max-width="800px"
+                :disabled="isDisableInput"
               ></v-text-field>
             </v-col>
           </v-row>
@@ -188,6 +199,7 @@
               <v-textarea 
                 v-model="eigyoinfo"
                 max-width="800px"
+                :disabled="isDisableInput"
               ></v-textarea>
             </v-col>
           </v-row>
@@ -202,7 +214,21 @@
             v-model="overTime"
             :items="['0:15', '0:30', '0:45', '1:00', '1:15', '1:30', '1:45', '2:00']"
             max-width="200px"
+            :disabled="isDisableInput"
           ></v-select>
+        </p>
+        <p class="text-body-1 my-2">
+          <v-row>
+            <v-col>
+              作業内容：  
+              <v-textarea 
+                v-model="works"
+                :rules="worksRules"
+                max-width="800px"
+                :disabled="isDisableInput"
+              ></v-textarea>
+            </v-col>
+          </v-row>
         </p>
         <p class="text-body-1 my-2">
           最低稼働時間：  
@@ -211,6 +237,7 @@
               v-model="minworktime"
               :rules="timeRules"
               max-width="300px"
+              :disabled="isDisableInput"
             ></v-text-field>
             &emsp;&emsp;&emsp;
             <v-radio-group inline v-model="timePassed">
@@ -225,6 +252,7 @@
             v-model="progress"
             :items="['A', 'B', 'C', 'D', 'E']"
             max-width="200px"
+            :disabled="isDisableInput"
           ></v-select>
         </p>
         <p class="text-body-1 my-2">
@@ -233,6 +261,7 @@
             v-model="conditions"
             :items="['A', 'B', 'C', 'D', 'E']"
             max-width="200px"
+            :disabled="isDisableInput"
           ></v-select>
         </p>
         <p class="text-body-1 my-2">
@@ -241,6 +270,7 @@
             v-model="relationships"
             :items="['A', 'B', 'C', 'D', 'E']"
             max-width="200px"
+            :disabled="isDisableInput"
           ></v-select>
         </p>
         <p class="text-body-1 my-2">
@@ -251,6 +281,7 @@
                 v-model="pointing"
                 :rules="pointingRules"
                 max-width="800px"
+                :disabled="isDisableInput"
               ></v-textarea>
             </v-col>
           </v-row>
@@ -263,6 +294,7 @@
                 v-model="thoughts"
                 :rules="thoughtsRules"
                 max-width="800px"
+                :disabled="isDisableInput"
               ></v-textarea>
             </v-col>
           </v-row>
@@ -279,6 +311,7 @@
               :counter="20"
               :rules="nameRules"
               max-width="500px"
+              :disabled="isDisableInput"
             ></v-text-field>
           </p>
           <p class="text-body-1 my-2">
@@ -289,6 +322,7 @@
                   v-model="situation"
                   :rules="situationRules"
                   max-width="800px"
+                  :disabled="isDisableInput"
                 ></v-textarea>
               </v-col>
             </v-row>
@@ -346,6 +380,7 @@ import { VDatePicker } from 'vuetify/lib/components/VDatePicker/index.mjs';
   const meansOtherText = ref('');
   const eigyoinfo = ref('');
   const overTime = ref('');
+  const works = ref('');
   const minworktime = ref('');
   const timePassed = ref('');
   const progress = ref('');
@@ -360,6 +395,7 @@ import { VDatePicker } from 'vuetify/lib/components/VDatePicker/index.mjs';
   let menu2 = ref<boolean>(false);
   let startDate = ref<string>(``);
   let endDate = ref<string>(``);
+  let isDisableInput = ref<boolean>(false);
 
   const handleClick1 = () => {
     menu1.value = true;
@@ -434,6 +470,12 @@ import { VDatePicker } from 'vuetify/lib/components/VDatePicker/index.mjs';
       return '失敗したこと、指摘を受けた点を入力してください。無い場合は「特になし」と入力してください。';
     },
   ];
+  const worksRules = [
+    (value: string) => {
+      if (value) return true;
+      return '作業内容を入力してください。';
+    },
+  ];
   const thoughtsRules = [
     (value: string) => {
       if (value) return true;
@@ -471,6 +513,7 @@ import { VDatePicker } from 'vuetify/lib/components/VDatePicker/index.mjs';
       isChecked2: isChecked2.value,
       meansOtherText: meansOtherText.value,
       overTime: overTime.value,
+      works: works.value,
       minworktime: minworktime.value,
       timePassed: timePassed.value,
       progress: progress.value,
